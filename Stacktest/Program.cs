@@ -11,6 +11,7 @@ namespace Stacktest
             private MyStackCell top;
             int stackSize = 0;
             public int Count { get  { return stackSize; } }
+
             //adding data to stack
             public void Push(int data)
             {
