@@ -53,12 +53,12 @@ namespace Stacktest
                     throw new InvalidOperationException();
             }
             //making possible to use foreach cycle for our class
-            private IEnumerable<int> getData(MyStackCell toFindData)
+            private IEnumerable<int> GetData(MyStackCell toFindData)
             {
                 if (toFindData.next != null)
                 {
                     yield return toFindData.data;
-                    foreach (var i in getData(toFindData.next))
+                    foreach (var i in GetData(toFindData.next))
                     {
                         yield return i;
                     }
@@ -69,7 +69,7 @@ namespace Stacktest
 
             public IEnumerator<int> GetEnumerator()
             {
-                return getData(top).GetEnumerator();             
+                return GetData(top).GetEnumerator();             
             }
 
             IEnumerator IEnumerable.GetEnumerator()
@@ -92,11 +92,8 @@ namespace Stacktest
         {
             MyStack stack = new MyStack();
             Console.WriteLine(stack.Count); //0
-            DateTime stackCounter = DateTime.Now;
             for (int i = 0; i < 10; i++)
                 stack.Push(i);
-            for (int i =0; i < 10; i++)
-                stack.Pop();
             Console.WriteLine(stack.Count); //10
             int c = stack.Count;
             Console.WriteLine(stack.Peek()); //9
@@ -106,7 +103,14 @@ namespace Stacktest
                 Console.Write(stack.Pop()); //9876543210
             }
             Console.WriteLine(stack.Count); //0
-            stack.Pop();//exceprion (stack is empry)
+            try
+            {
+                stack.Pop();//exceprion (stack is empry)
+            }
+            catch(InvalidOperationException)
+            {
+                Console.WriteLine("Stack is empty.");
+            }
         }
     }
 }
