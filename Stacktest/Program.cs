@@ -31,28 +31,13 @@ namespace Stacktest
                 //just counting data in stack
                 stackSize++;
             }
-            //recursively moving all elements on top and deleting llast one,
-            //what means that we are deletig top element
-            private void DeleteTop(ref MyStackCell toDelete)
-            {
-                if (toDelete.next != null)
-                {
-                    toDelete.data = toDelete.next.data;
-                    if (toDelete.next.next == null)
-                        toDelete.next = null;
-                    else
-                        DeleteTop(ref toDelete.next);
-                }
-                else
-                    toDelete = null;                
-            }
             //returning data from top element and deleting it
             public int Pop()
             {
                 if (top != null)
                 {
                     int result = top.data;
-                    DeleteTop(ref top);
+                    top = top.next;
                     stackSize--;
                     return result;
                 }
@@ -107,8 +92,11 @@ namespace Stacktest
         {
             MyStack stack = new MyStack();
             Console.WriteLine(stack.Count); //0
+            DateTime stackCounter = DateTime.Now;
             for (int i = 0; i < 10; i++)
                 stack.Push(i);
+            for (int i =0; i < 10; i++)
+                stack.Pop();
             Console.WriteLine(stack.Count); //10
             int c = stack.Count;
             Console.WriteLine(stack.Peek()); //9
@@ -118,7 +106,6 @@ namespace Stacktest
                 Console.Write(stack.Pop()); //9876543210
             }
             Console.WriteLine(stack.Count); //0
-            Console.ReadKey();
             stack.Pop();//exceprion (stack is empry)
         }
     }
